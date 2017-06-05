@@ -1,0 +1,9 @@
+*.settings/
+*target/
+*.svn/
+*.project
+*.classpath
+.DS_Store
+.idea/
+*.iml
+integrationTest/src/test/resources/env.properties
