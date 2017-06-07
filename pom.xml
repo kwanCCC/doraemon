@@ -27,6 +27,7 @@
     <modules>
         <module>algorithms</module>
         <module>gear</module>
+        <module>io</module>
     </modules>
 
 

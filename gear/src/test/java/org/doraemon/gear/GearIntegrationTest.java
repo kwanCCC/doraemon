@@ -27,6 +27,5 @@ public class GearIntegrationTest {
 
     @Test
     public void gear_can_registered_self() throws Exception {
-        CuratorFramework
     }
 }
