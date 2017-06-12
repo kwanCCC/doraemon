@@ -8,5 +8,6 @@ import lombok.Data;
 public class ZKConfig {
 
     private final int    sessionTimeout;
+    private final int    connectTimeout;
     private final String connect;
 }

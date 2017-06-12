@@ -19,7 +19,11 @@ public class GearIntegartionTest {
 
     @Test
     public void server_register_self_then_discovery_others() throws Exception {
-        ZKConfig zkConfig = ZKConfig.builder().sessionTimeout(3000).connect(zookeeper.getConnectString()).build();
+        ZKConfig zkConfig = ZKConfig.builder()
+                                    .sessionTimeout(3000)
+                                    .connectTimeout(1000)
+                                    .connect(zookeeper.getConnectString())
+                                    .build();
         GearConfig gearConfig = GearConfig.builder()
                                           .base("doraemon")
                                           .zkConfig(zkConfig)
