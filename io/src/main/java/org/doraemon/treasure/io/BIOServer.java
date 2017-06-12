@@ -1,4 +1,4 @@
-package org.doraemon.io;
+package org.doraemon.treasure.io;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 
@@ -43,33 +43,19 @@ public class BIOServer {
             }
             System.out.println("Accept from " + socket.getInetAddress().toString() + " with Content \n" +
                                sw.toString());
-            reader.close();
-            sw.flush();
-            sw.close();
         } catch (IOException e) {
             e.printStackTrace();
-            try {
-                socket.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
         }
     }
 
     private static void inBoundFunc(Socket socket) {
-        OutputStream outputStream = null;
         try {
-            outputStream = socket.getOutputStream();
+            OutputStream outputStream = socket.getOutputStream();
             outputStream.write("Server Response \n".getBytes());
             outputStream.flush();
             outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-            try {
-                socket.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
         }
     }
 
