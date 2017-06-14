@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GearClient implements Gear {
 
+
     private final GearConfig gearConfig;
     private final AtomicBoolean clientState = new AtomicBoolean(false);
     private final ZkServiceDiscoveryClient serviceDiscoveryClient;
