@@ -4,13 +4,11 @@ import org.apache.curator.x.discovery.ServiceInstance;
 
 import java.util.Collection;
 
-public interface Gear {
+public interface ServiceDiscoveryClient {
 
     void start();
 
     void stop();
-
-    boolean isRunning();
 
     ServiceInstance serviceInstance(String appName);
 
