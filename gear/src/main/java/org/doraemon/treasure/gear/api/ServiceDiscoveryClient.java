@@ -14,7 +14,12 @@ public interface ServiceDiscoveryClient<T> {
     void stop();
 
     ServiceInstance<T> serviceInstance(String appName, ServiceStrategy strategy, Predicate<T> filter)
-            throws GearCannotGetServiceException;
+            throws Exception;
 
-    Collection<ServiceInstance<T>> serviceInstances(String appName, ServiceStrategy strategy, Predicate<T> filter);
+    Collection<ServiceInstance<T>> serviceInstances(String appName, ServiceStrategy strategy, Predicate<T> filter)
+            throws Exception;
+
+    void registerService(ServiceInstance<T> serviceInstance) throws Exception;
+
+    void unregisterService(ServiceInstance<T> serviceInstance) throws Exception;
 }

@@ -1,7 +1,8 @@
 package org.doraemon.treasure.gear;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryNTimes;
@@ -12,20 +13,33 @@ import org.apache.curator.x.discovery.ServiceDiscoveryBuilder;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.apache.curator.x.discovery.ServiceProvider;
 import org.doraemon.treasure.gear.api.ServiceDiscoveryClient;
-import org.doraemon.treasure.gear.exception.GearCannotGetServiceException;
 import org.doraemon.treasure.gear.exception.GearRuntimeException;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
+import static org.doraemon.treasure.gear.SelectStrategyFactory.getStrategy;
+
+@Slf4j
 public class ZkServiceDiscoveryClient<T> implements ServiceDiscoveryClient<T> {
 
     private final GearConfig       gearConfig;
     private final CuratorFramework curator;
     private       ServiceDiscovery discovery;
-    private final Caffeine<String, ServiceProvider> serviceProviderMap=Caffeine.newBuilder().initialCapacity(5).maximumSize(2000).
+    private final Cache<String, ServiceProvider> providerCache = Caffeine.newBuilder()
+                                                                         .initialCapacity(5)
+                                                                         .maximumSize(2000)
+                                                                         .expireAfterAccess(
+                                                                                 5,
+                                                                                 TimeUnit.MINUTES
+                                                                         )
+                                                                         .removalListener((key, value, cause) -> {
+                                                                             if (value instanceof ServiceProvider) {
+                                                                                 CloseableUtils.closeQuietly(((ServiceProvider) value));
+                                                                             }
+                                                                         }).build();
 
     public ZkServiceDiscoveryClient(GearConfig gearConfig) {
         this(gearConfig, CuratorFrameworkFactory.builder()
@@ -68,21 +82,31 @@ public class ZkServiceDiscoveryClient<T> implements ServiceDiscoveryClient<T> {
 
     @Override
     public ServiceInstance<T> serviceInstance(String appName, ServiceStrategy strategy, Predicate filter)
-            throws GearCannotGetServiceException {
-        Optional<ProviderStrategy<Object>> providerStrategy = SelectStrategyFactory.getStrategy(strategy);
-        ServiceProvider serviceProvider;
-        try {
-            serviceProvider = discovery.serviceProviderBuilder()
-                                       .providerStrategy(providerStrategy.get())
-                                       .additionalFilter(instanceFilter -> filter.test(instanceFilter.getPayload()))
-                                       .serviceName(appName).build();
-            serviceProvider.start();
-            return serviceProvider.getInstance();
-        } catch (Exception e) {
-            throw new GearCannotGetServiceException(e);
-        } finally {
+            throws Exception {
+        Optional<ProviderStrategy<T>> providerStrategy = getStrategy(strategy);
+        ServiceProvider serviceProvider = providerCache.get(
+                appName,
+                s -> createServiceProvider(appName, filter, providerStrategy)
+        );
+        return serviceProvider.getInstance();
+    }
 
+    private ServiceProvider createServiceProvider(
+            String appName,
+            Predicate filter,
+            Optional<ProviderStrategy<T>> providerStrategy
+    ) {
+        ServiceProvider provider = discovery.serviceProviderBuilder()
+                                            .providerStrategy(providerStrategy.get())
+                                            .additionalFilter(instanceFilter -> filter.test(instanceFilter.getPayload()))
+                                            .serviceName(appName)
+                                            .build();
+        try {
+            provider.start();
+        } catch (Exception e) {
+            log.error("start service provider error . ", e);
         }
+        return provider;
     }
 
     @Override
@@ -90,7 +114,22 @@ public class ZkServiceDiscoveryClient<T> implements ServiceDiscoveryClient<T> {
             String appName,
             ServiceStrategy strategy,
             Predicate<T> filter
-    ) {
-        return null;
+    ) throws Exception {
+        Optional<ProviderStrategy<T>> providerStrategy = getStrategy(strategy);
+        ServiceProvider serviceProvider = providerCache.get(
+                appName,
+                s -> createServiceProvider(appName, filter, providerStrategy)
+        );
+        return serviceProvider.getAllInstances();
+    }
+
+    @Override
+    public void registerService(ServiceInstance<T> serviceInstance) throws Exception {
+        discovery.registerService(serviceInstance);
+    }
+
+    @Override
+    public void unregisterService(ServiceInstance<T> serviceInstance) throws Exception {
+        discovery.unregisterService(serviceInstance);
     }
 }
