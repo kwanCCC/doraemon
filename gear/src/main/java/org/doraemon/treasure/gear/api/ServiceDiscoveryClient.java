@@ -1,10 +1,11 @@
 package org.doraemon.treasure.gear.api;
 
 import org.apache.curator.x.discovery.ServiceInstance;
-import org.doraemon.treasure.gear.ServiceStrategy;
-import org.doraemon.treasure.gear.exception.GearCannotGetServiceException;
+import org.doraemon.treasure.gear.strategy.ServiceStrategy;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public interface ServiceDiscoveryClient<T> {
@@ -13,13 +14,22 @@ public interface ServiceDiscoveryClient<T> {
 
     void stop();
 
-    ServiceInstance<T> serviceInstance(String appName, ServiceStrategy strategy, Predicate<T> filter)
-            throws Exception;
+    ServiceInstance<T> serviceInstance(String serviceName, Predicate<T> payloadFilter, ServiceStrategy selectStrategy);
 
-    Collection<ServiceInstance<T>> serviceInstances(String appName, ServiceStrategy strategy, Predicate<T> filter)
-            throws Exception;
+    Collection<ServiceInstance<T>> serviceInstances(String serviceName);
 
-    void registerService(ServiceInstance<T> serviceInstance) throws Exception;
+    ServiceInstance<T> registerService(
+            T serviceProfile,
+            String serviceName,
+            int port
+    );
 
-    void unregisterService(ServiceInstance<T> serviceInstance) throws Exception;
+    ServiceInstance<T> registerService(
+            T serviceProfile,
+            String serviceName,
+            String address,
+            int port
+    );
+
+    Map<String, Collection<ServiceInstance<T>>> serviceInstances();
 }

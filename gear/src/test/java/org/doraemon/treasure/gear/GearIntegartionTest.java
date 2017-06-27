@@ -34,7 +34,7 @@ public class GearIntegartionTest {
                                           .port(9999)
                                           .profile("test")
                                           .build();
-        Gear gear = new GearClient(gearConfig);
+        Gear gear = new GearServiceImpl(gearConfig);
         gear.start();
         Assert.assertTrue(ZookeeperUtil.nodeExist(zookeeper.getConnectString(), "/doramemon/treasure/testApp"));
     }

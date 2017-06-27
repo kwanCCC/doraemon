@@ -1,5 +1,6 @@
 package org.doraemon.treasure.gear.beans;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 import java.util.Map;
 
+@AllArgsConstructor
 @Builder
 @Data
 @EqualsAndHashCode

@@ -1,4 +1,4 @@
-package org.doraemon.treasure.gear;
+package org.doraemon.treasure.gear.strategy;
 
 import org.apache.curator.x.discovery.ProviderStrategy;
 import org.apache.curator.x.discovery.strategies.RandomStrategy;
