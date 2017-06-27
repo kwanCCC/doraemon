@@ -1,4 +1,4 @@
-package doraemon.algorithms;
+package doraemon.algorithms.sort;
 
 import java.util.Arrays;
 
