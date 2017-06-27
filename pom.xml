@@ -64,6 +64,7 @@
         <module>io</module>
         <module>gear</module>
         <module>redisQ-client</module>
+        <module>ares</module>
     </modules>
 
 

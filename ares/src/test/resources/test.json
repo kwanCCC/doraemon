@@ -1,0 +1,62 @@
+{
+  "default": {
+    "username": "zhaohaijun",
+    "url": "jdbc:mysql://db-server:3306/tps",
+    "password": "676892"
+  },
+  "metricName": {
+    "url": "jdbc:mysql://db-server:3306/metricname",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "metricData": {
+    "url": "jdbc:mysql://db-server:3306/metricdata",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "metricData_webTransaction": {
+    "url": "jdbc:mysql://db-server:3306/metricdata_webTransaction",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "metricData_database": {
+    "url": "jdbc:mysql://db-server:3306/metricdata_database",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "metricData_apdex": {
+    "url": "jdbc:mysql://db-server:3306/metricdata_apdex",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "metricData_external": {
+    "url": "jdbc:mysql://db-server:3306/metricdata_external",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "metricData_others": {
+    "url": "jdbc:mysql://db-server:3306/metricdata_others",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "rum": {
+    "url": "jdbc:mysql://db-server:3306/browsermaindata",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "browserTime": {
+    "url": "jdbc:mysql://db-server:3306/browsertimedata",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "ajax": {
+    "url": "jdbc:mysql://db-server:3306/browserxhrdata",
+    "username": "zhaohaijun",
+    "password": "676892"
+  },
+  "jserror": {
+    "url": "jdbc:mysql://db-server:3306/browsererrordata",
+    "username": "zhaohaijun",
+    "password": "676892"
+  }
+}
