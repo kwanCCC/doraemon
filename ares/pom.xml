@@ -51,13 +51,16 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <!-- Import dependency management from Spring Boot -->
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
+                <artifactId>spring-boot-dependencies</artifactId>
                 <version>1.3.6.RELEASE</version>
+                <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>

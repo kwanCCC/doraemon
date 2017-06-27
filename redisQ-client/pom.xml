@@ -61,6 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7.2</version>
                 <configuration>
                     <excludes>
                         <exclude>**/*ITest.java</exclude>
@@ -103,6 +104,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
+                        <version></version>
                         <executions>
                             <execution>
                                 <id>perpare_env</id>
