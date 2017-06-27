@@ -19,11 +19,11 @@ public class SpringConfigurable {
 
     public void config() {
         Properties props = new Properties();
-        try {
-            props.load(new ByteArrayInputStream(config.getContent().getBytes("UTF-8")));
-        } catch (IOException e) {
-            logger.error("cannot parse configuration: " + e, e);
-        }
+//        try {
+//            props.load(new ByteArrayInputStream(config.getContent().getBytes("UTF-8")));
+//        } catch (IOException e) {
+//            logger.error("cannot parse configuration: " + e, e);
+//        }
         springContextPropertiesInjector.inject("gear-props", props);
 
         // TODO: test this

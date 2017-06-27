@@ -12,7 +12,7 @@ public class GearIntegartionTest {
     public static TestingServer zookeeper;
 
     @BeforeClass
-    public void setUp() throws Exception {
+    public static void setUp() throws Exception {
         zookeeper = new TestingServer();
         zookeeper.start();
     }

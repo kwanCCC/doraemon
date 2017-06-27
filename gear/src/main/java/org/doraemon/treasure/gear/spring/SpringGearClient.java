@@ -32,7 +32,7 @@ public class SpringGearClient implements Gear {
     }
 
     SpringGearClient(SpringContextPropertiesInjector propertiesInjector) {
-        this(new SpringConfigurable(propertiesInjector));
+        this();
     }
 
     @Override
