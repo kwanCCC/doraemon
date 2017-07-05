@@ -2,9 +2,8 @@ package doraemon.algorithms.ds;
 
 import lombok.Data;
 
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RedBlackTree<K extends Comparable, V> {
 
@@ -29,9 +28,14 @@ public class RedBlackTree<K extends Comparable, V> {
         } else {
             x.value = value;
         }
-        String s = "";
-        s = Arrays.stream(s.split("\\s+")).collect(Collectors.joining(" "));
         return x;
+    }
+
+    @Override
+    public String toString() {
+        return "RedBlackTree{" +
+               "root=" + (Objects.nonNull(root) ? root.toString() : "") +
+               '}';
     }
 
     @Data
@@ -53,7 +57,25 @@ public class RedBlackTree<K extends Comparable, V> {
             this.isBlack = isBlack;
         }
 
+        @Override
+        public String toString() {
+            return "RBNode{" + "color=" + (isBlack ? "black" : "red") +
+                   "key=" + key +
+                   ", value=" + value +
+                   ", left={\n\t" + left.toString() +
+                   "\n\t}, right={\n\t" + right.toString() +
+                   "\n\t}}";
+        }
+    }
 
+    public static void main(String[] args) {
+        RedBlackTree<Integer, Integer> tree = new RedBlackTree<>();
+        ThreadLocalRandom current = ThreadLocalRandom.current();
+        for (int i = 0; i < 100; i++) {
+            int key = current.nextInt(100);
+            tree.put(key, key);
+        }
+        System.out.println(tree.toString());
     }
 }
 

@@ -65,6 +65,7 @@
         <module>gear</module>
         <module>redisQ-client</module>
         <module>ares</module>
+        <module>OpenJDKResearch</module>
     </modules>
 
 
