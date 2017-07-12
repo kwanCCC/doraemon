@@ -23,9 +23,7 @@ public class JakiroAutoConfiguration {
     public DataSource getDataSource(DataSourceConfiguration configuration) {
 
         Map<Object, Object> dataSources = new HashMap<>();
-        configuration.getDs().forEach((key, propes) -> {
-            dataSources.put(key, propes.buildDataSource());
-        });
+        configuration.getDs().forEach((key, propes) -> dataSources.put(key, propes.buildDataSource()));
 
         final DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setDynamicDataSourceName(configuration.getName());
