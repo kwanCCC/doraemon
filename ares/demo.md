@@ -13,8 +13,8 @@
     @Bean
     public Interceptor interceptor4DB() {
         Interceptor4DB multiRepositoryPlugin = new Interceptor4DB();
-        multiRepositoryPlugin.setTableNameVsHandler(tableNameVsHandlerProperties());
-        multiRepositoryPlugin.setTableNameVsDataSource(tableNameVsDataSourceProperties());
+        multiRepositoryPlugin.setTableNameVsHandler(Properties);
+        multiRepositoryPlugin.setTableNameVsDataSource(Properties);
         return multiRepositoryPlugin;
     }
     }
