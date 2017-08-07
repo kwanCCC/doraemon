@@ -66,6 +66,7 @@
         <module>redisQ-client</module>
         <module>ares</module>
         <module>OpenJDKResearch</module>
+        <module>dnsagent</module>
     </modules>
 
 
